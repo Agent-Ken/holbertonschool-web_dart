@@ -3,7 +3,7 @@ String longestPalindrome(String s) {
     return "none";
   }
 
-  String longestPal = "none";
+  String longestPal = "";
 
   bool isPalindrome(String sub) {
     int left = 0;
@@ -30,5 +30,5 @@ String longestPalindrome(String s) {
     }
   }
 
-  return longestPal;
+  return longestPal.isNotEmpty ? longestPal : "none";
 }
