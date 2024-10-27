@@ -3,35 +3,38 @@ class Password {
 
   Password({required String password}) : _password = password;
 
-  String get password => _password;
-
-  set password(String newPassword) {
-    if (_isValidPassword(newPassword)) {
-      _password = newPassword;
-    } else {
-      throw Exception(
-          "Use password between 8-16 chars which contains uppercase, lowercase, and numbers.");
-    }
-  }
-
   bool isValid() {
-    return _isValidPassword(_password);
-  }
-
-  bool _isValidPassword(String password) {
-    if (password.length < 8 || password.length > 16) {
+    if (_password.length < 8 || _password.length > 16) {
       return false;
     }
 
-    bool hasUppercase = password.contains(RegExp(r'[A-Z]'));
-    bool hasLowercase = password.contains(RegExp(r'[a-z]'));
-    bool hasNumber = password.contains(RegExp(r'[0-9]'));
+    if (!_containsUppercase() || !_containsLowercase() || !_containsNumbers()) {
+      return false;
+    }
 
-    return hasUppercase && hasLowercase && hasNumber;
+    return true;
+  }
+
+  bool _containsUppercase() {
+    return _password.contains(RegExp(r'[A-Z]'));
+  }
+
+  bool _containsLowercase() {
+    return _password.contains(RegExp(r'[a-z]'));
+  }
+
+  bool _containsNumbers() {
+    return _password.contains(RegExp(r'[0-9]'));
+  }
+
+  String get password => _password;
+
+  set password(String value) {
+    _password = value;
   }
 
   @override
   String toString() {
-    return 'Your Password is: $_password';
+    return "Your Password is: $_password";
   }
 }

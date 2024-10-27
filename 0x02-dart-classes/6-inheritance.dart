@@ -5,6 +5,7 @@ class User extends Password {
   String name;
   int age;
   double height;
+  late String user_password;
 
   User({
     required this.id,
@@ -13,15 +14,17 @@ class User extends Password {
     required this.height,
     required String user_password,
   }) : super(password: user_password) {
-    if (!isValid()) {
-      throw Exception("Invalid password for the user.");
-    }
+    this.user_password = user_password;
   }
 
-  String get user_password => password;
-
-  set user_password(String newPassword) {
-    password = newPassword;
+  static User fromJson(Map<dynamic, dynamic> userJson) {
+    return User(
+      id: userJson['id'] ?? 0,
+      name: userJson['name'] ?? '',
+      age: userJson['age'] ?? 0,
+      height: userJson['height'] ?? 0.0,
+      user_password: userJson['user_password'] ?? '',
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -34,18 +37,9 @@ class User extends Password {
     };
   }
 
-  static User fromJson(Map<dynamic, dynamic> userJson) {
-    return User(
-      id: userJson['id'],
-      name: userJson['name'],
-      age: userJson['age'],
-      height: userJson['height'],
-      user_password: userJson['user_password'] ?? '',
-    );
-  }
-
   @override
   String toString() {
-    return 'User(id: $id, name: $name, age: $age, height: $height, Password: ${isValid()})';
+    bool passwordValid = super.isValid();
+    return 'User(id : $id ,name: $name, age: $age, height: $height, Password: $passwordValid)';
   }
 }
